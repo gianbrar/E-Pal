@@ -3,5 +3,5 @@
 using namespace std;
 
 class user {
-  string
+  string name;
 };
