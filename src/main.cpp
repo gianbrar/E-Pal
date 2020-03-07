@@ -10,21 +10,27 @@ using namespace std;
 user u;
 
 int main() {
+  system("[ ! -d ../data ] && mkdir ../data");
   bool debugMode = true;
   if (debugMode == true) {
     string deleteAll;
     CSAY "(Debug mode detected as active. Delete all?)" << endl;
     getline(cin, deleteAll);
-    if (deleteAll == true) {
+    if (deleteAll == "Y" || deleteAll == "y") {
+      CSAY "(Deleting all)" << endl;
+      
+      system("./debug.bash");
     }
-    
+    else {
+      CSAY "(Not deleting; remaining in debug)" << endl;
+    }
   }
 	string name = "EPAL";
   bool nameWithoutUser = false;
   u.name = "";
 	ofstream oName;
-	ifstream iName("name.txt");
-	ifstream iUser("userData.txt");
+	ifstream iName("../data/name.txt");
+	ifstream iUser("../data/userData.txt");
 	ofstream oUser;
 	getline(iName, name);
 	for (int i = 0; i < 2; i++) {
@@ -39,7 +45,7 @@ int main() {
 	}
 	if (name == "EPAL" || name == "") {
 		name = "EPAL";
-    oName.open("name.txt");
+    oName.open("../data/name.txt");
 		ESAY "Hey there, new friend!" << endl;
 		sleep(1);
 		ESAY "I'm having some trouble remembering my name. What was it, again?" << endl;
@@ -88,8 +94,9 @@ int main() {
         CSAY "(Please enter a valid gender. Contact thehiddenmonkey on GitHub if you belive you have not been properly represented.)" << endl;
       }
     }
-    oUser.open("userData.txt");
-    oUser << u.name << endl << u.gender;
+    oUser.open("../data/userData.txt");
+    oUser << u.name;
+    oUser << u.gender;
     sleep(1);
     if (u.gender == "p") {
       ESAY "Too uncomfortable? Sorry I made you feel that way!\nAnyways, ";
