@@ -1,2 +1,2 @@
-language = "cpp"
-run = "cd src && g++ main.cpp && chmod +x debug.bash && ./a.out"
+rm ../data/name.txt
+rm ../data/userData.txt
