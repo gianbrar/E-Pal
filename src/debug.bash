@@ -1,2 +1,2 @@
-rm name.txt
-rm userData.txt
+language = "cpp"
+run = "cd src && g++ main.cpp && chmod +x debug.bash && ./a.out"
