@@ -18,7 +18,6 @@ int main() {
     getline(cin, deleteAll);
     if (deleteAll == "Y" || deleteAll == "y") {
       CSAY "(Deleting all)" << endl;
-      
       system("./debug.bash");
     }
     else {
@@ -95,8 +94,8 @@ int main() {
       }
     }
     oUser.open("../data/userData.txt");
-    oUser << u.name;
-    oUser << u.gender;
+    oUser << u.name << endl << u.gender;
+    oUser.close();
     sleep(1);
     if (u.gender == "p") {
       ESAY "Too uncomfortable? Sorry I made you feel that way!\nAnyways, ";
