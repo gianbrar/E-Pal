@@ -3,5 +3,7 @@
 using namespace std;
 
 class user {
-  string name;
+  public:
+    string name;
+    string gender;
 };
