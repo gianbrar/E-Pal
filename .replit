@@ -1,2 +1,2 @@
 language = "cpp"
-run = "cd src && g++ main.cpp && ./a.out"
+run = "cd src && g++ main.cpp && chmod +x debug.bash && && ./a.out"
