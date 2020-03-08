@@ -130,29 +130,31 @@ int main() {
       ESAY "...\nSilent treatment, huh?" << endl;
     }
     string botResponse;
-    string back[3][5] { {"happy", "That's wonderful!|NU", "Me too :)|NU", "What a great emotion!|NU", "Happiness is such a great thing!|NU"}, {"test", "Are you testing me?|NU", "I didn't study for this!|NU", "I'll be the one testing you today, Ma'am and/or Sir!|MS", "Reminds me of the days in which I took my exams.|NU"}, {"hello there", "General Kenobi!|NU", "Come here, my little friend.|NU", "Hi there!|NU", "*R2D2 NOISES*|NU"} };
+    string back[3][5] = { {"happy", "That's wonderful!|NU", "Me too :)|NU", "What a great emotion!|NU", "Happiness is such a great thing!|NU"}, {"test", "Are you testing me?|NU", "I didn't study for this!|NU", "I'll be the one testing you today, ma'am and/or sir!|MS", "Reminds me of the days in which I took my exams.|NU"}, {"hello there", "General Kenobi!|NU", "Come here, my little friend.|NU", "Hi there!|NU", "*R2D2 NOISES*|NU"} };
     int negState = response.find("not");
     for (int i = 0; i < 3; i++) {
       if (response.find(back[i][0]) != string::npos) {
         botResponse = back[i][rand() % 4 + 1];
         if (response.substr(response.length() - 4, response.length() - 3) == "?") {
+          cout << "responseType is question" << endl;
           responseType = "question";
         }
         if (botResponse.substr(botResponse.length() - 4, botResponse.length() - 3) == "?") {
+          cout << "botResponseType is question" << endl;
           botResponseType = "question";
         }
-        if (botResponse.substr(response.length() - 3) == "|MS") {
-          int ms = botResponse.find("Ma'am");
+        cout << "substr is " << botResponse.substr(botResponse.length() - 3) << endl;
+        if (botResponse.substr(botResponse.length() - 3) == "|MS") {
+          int ms = botResponse.find("ma'am");
+          cout << "u.gender is " << u.gender << endl;
           if (u.gender == "f" || u.gender == "F") {
-            botResponse.erase(0, ms);
+            botResponse.erase(ms + 5, 12);
           }
           else if (u.gender == "m" || u.gender == "M") {
-            botResponse.erase(0, ms + 13);
+            botResponse.erase(ms, 13);
           }
         }
-        else {
-          botResponse.erase(botResponse.length() - 3, botResponse.length());
-        }
+        botResponse.erase(botResponse.length() - 3, botResponse.length() - 1);
         ESAY botResponse << endl;
         break;
       }
