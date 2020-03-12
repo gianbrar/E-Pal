@@ -11,7 +11,7 @@ user u;
 
 int main() {
   system("[ ! -d ../data ] && mkdir ../data");
-  bool debugMode = true;
+  bool debugMode = false;
   if (debugMode == true) {
     string deleteAll;
     CSAY "(Debug mode detected as active. Delete all?)" << endl;
@@ -86,7 +86,7 @@ int main() {
     sleep(1);
     u.gender = "";
     while (u.gender != "m" && u.gender != "f" && u.gender != "g" && u.gender != "n" && u.gender != "p") {
-      ESAY "Now then, I'd like to know what you refer to yourself as. What is your gender or what pronouns do you align with?\nM: Male\nF: Female\nG: Gender Fluid\nN: Non-Binary" << endl;
+      ESAY "Now then, I'd like to know what you refer to yourself as. What is your gender or what pronouns do you align with?\nM: Male\nF: Female\nG: Gender Fluid\nN: Non-Binary\nP: Prefer not to say" << endl;
       getline(cin, u.gender);
       transform(u.gender.begin(), u.gender.end(), u.gender.begin(), ::tolower);
       if (u.gender != "m" && u.gender != "f" && u.gender != "g" && u.gender != "n" && u.gender != "p") {
@@ -130,11 +130,11 @@ int main() {
       ESAY "...\nSilent treatment, huh?" << endl;
     }
     string botResponse;
-    string back[3][5] = { {"happy", "That's wonderful!|NU", "Me too :)|NU", "What a great emotion!|NU", "Happiness is such a great thing!|NU"}, {"test", "Are you testing me?|NU", "I didn't study for this!|NU", "I'll be the one testing you today, ma'am and/or sir!|MS", "Reminds me of the days in which I took my exams.|NU"}, {"hello there", "General Kenobi!|NU", "Come here, my little friend.|NU", "Hi there!|NU", "*R2D2 NOISES*|NU"} };
+    string back[5][11] = { {"happy", "That's wonderful!|NU", "Me too :)|NU", "What a great emotion!|NU", "Happiness is such a great thing!|NU", "It's great to see that you're feeling better!|ID"}, {"test", "Are you testing me?|NU", "I didn't study for this!|NU", "I'll be the one testing you today, ma'am and/or sir!|MS", "Reminds me of the days in which I took my exams.|NU"}, {"hello there", "General Kenobi!|NU", "Come here, my little friend.|NU", "Hi there!|NU", "*R2D2 NOISES*|NU"}, {"corona", "Make sure to wash your hands!|NU", "Ensure that you're safe at all times.|NU", "This virus stuff is really scary, huh?|NU", "You can learn more about COID-19 here:\n http://cdc.gov/coronavirus/2019-ncov|NU"}, {"hello", "...it's me. I WAS WONDERING IF AFTER ALL THIS TIME- I'm sorry.|IE"}};
     int negState = response.find("not");
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
       if (response.find(back[i][0]) != string::npos) {
-        botResponse = back[i][rand() % 4 + 1];
+        botResponse = back[i][rand() % 9 + 1];
         if (response.substr(response.length() - 4, response.length() - 3) == "?") {
           cout << "responseType is question" << endl;
           responseType = "question";
@@ -143,7 +143,6 @@ int main() {
           cout << "botResponseType is question" << endl;
           botResponseType = "question";
         }
-        cout << "substr is " << botResponse.substr(botResponse.length() - 3) << endl;
         if (botResponse.substr(botResponse.length() - 3) == "|MS") {
           int ms = botResponse.find("ma'am");
           cout << "u.gender is " << u.gender << endl;
@@ -153,6 +152,30 @@ int main() {
           else if (u.gender == "m" || u.gender == "M") {
             botResponse.erase(ms, 13);
           }
+        }
+        else if (botResponse.substr(botResponse.length() - 3) == "|IE") {
+          if (response.length() != back[i][0].length() && i != 4) {
+            continue;
+          }
+          else if (response.length() != back[i][0].length() && i == 4) {
+            while (botResponse.substr(botResponse.length() - 3) == "|IE") {
+              botResponse = back[i][rand() % 3 + 1];
+            }
+          }
+        }
+        else if (botResponse.substr(botResponse.length() - 3) == "|ID") {
+          // Checks if negative emotion formerly existed
+          ifstream emotion("../data/emotions.txt");
+          	for (int i = 0; i < 2; i++) {
+		          switch (i) {
+			          case 0:
+				          getline(emotion, u.depressedLevels);
+				          break;
+                case 1:
+                  getline(emotion, u.happyLevels);
+                  break;
+		        }
+	        }
         }
         botResponse.erase(botResponse.length() - 3, botResponse.length() - 1);
         ESAY botResponse << endl;
