@@ -169,10 +169,10 @@ int main() {
           	for (int i = 0; i < 2; i++) {
 		          switch (i) {
 			          case 0:
-				          getline(emotion, u.depressedLevels);
+				          getline(emotion, u.SdepressedLevels);
 				          break;
                 case 1:
-                  getline(emotion, u.happyLevels);
+                  getline(emotion, u.ShappyLevels);
                   break;
 		        }
 	        }
