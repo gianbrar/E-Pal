@@ -6,4 +6,6 @@ class user {
   public:
     string name;
     string gender;
+    int happyLevels;
+    int depressedLevels;
 };
